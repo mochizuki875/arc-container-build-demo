@@ -1,6 +1,10 @@
-name: Image Build
+# name: Image Build
 
-on: [push]
+# on: [push]
+
+name: ARC Container Image Build Demo
+on:
+  workflow_dispatch:
 
 env:
   IMAGE_REGISTRY: ghcr.io
@@ -15,7 +19,7 @@ jobs:
     outputs:
       image: ${{ steps.image.outputs.image }}
       digest: ${{ steps.build.outputs.digest }}
-    runs-on: ubuntu-latest
+    runs-on: arc-runner-set-arc-container-build-demo
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v4
