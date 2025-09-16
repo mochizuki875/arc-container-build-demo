@@ -18,8 +18,8 @@ jobs:
       digest: ${{ steps.build.outputs.digest }}
     runs-on: arc-runner-set-arc-container-build-demo
     steps:
-      - name: Checkout the repository
-        uses: actions/checkout@v4
+      # - name: Checkout the repository
+      #   uses: actions/checkout@v4
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -41,8 +41,8 @@ jobs:
         id: build
         uses: docker/build-push-action@v6
         with:
-          context: .
-          file: Dockerfile
+          # context: .
+          # file: Dockerfile
           push: true
           tags: ${{ steps.meta.outputs.tags }}  # Get tags from outputs of meta step
           labels: ${{ steps.meta.outputs.labels }}  # Get labels from outputs of meta step
@@ -63,8 +63,8 @@ jobs:
       actions: read # for detecting the Github Actions environment.
       id-token: write # for creating OIDC tokens for signing.
       packages: write # for uploading attestations.
-    # if: startsWith(github.ref, 'refs/tags/')
-    uses: slsa-framework/slsa-github-generator/.github/workflows/generator_container_slsa3.yml@v2.1.0
+    # if: startsWith(github.ref, 'refs/tags/') # タグが付いたときのみ実行
+    uses: slsa-framework/slsa-github-generator/.github/workflows/generator_container_slsa3.yml@v2.1.0  # Provenanceを生成するReusable Workflowを呼び出す
     with:
       image: ${{ needs.build.outputs.image }}
       digest: ${{ needs.build.outputs.digest }}
