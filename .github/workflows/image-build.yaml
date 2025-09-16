@@ -1,7 +1,7 @@
 name: ARC Container Image Build Demo
 on:
-  workflow_dispatch
-  push
+  workflow_dispatch:
+  push:
 
 env:
   IMAGE_REGISTRY: ghcr.io
