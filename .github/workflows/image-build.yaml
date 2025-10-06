@@ -54,17 +54,17 @@ jobs:
           image_name="${IMAGE_REGISTRY}/${IMAGE_NAME}"
           echo "image=$image_name" >> "$GITHUB_OUTPUT"
 
-    # [デバッグ] GitHub Contextの中身を確認する
-    check-github-context:
-      runs-on: arc-runner-set-arc-container-build-demo
-      env:
-        GITHUB_CONTEXT: ${{ toJson(github) }}
-      steps:
-        - id: check
-          run: |
-            echo "==========================================" 
-            echo $GITHUB_OUTPUT
-            echo "=========================================="
+  # [デバッグ] GitHub Contextの中身を確認する
+  check-github-context:
+    runs-on: arc-runner-set-arc-container-build-demo
+    env:
+      GITHUB_CONTEXT: ${{ toJson(github) }}
+    steps:
+      - id: check
+        run: |
+          echo "==========================================" 
+          echo $GITHUB_OUTPUT
+          echo "=========================================="
             
 
   # This step calls the container workflow to generate provenance and push it to the container registry.
