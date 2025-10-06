@@ -1,6 +1,6 @@
 name: ARC Container Image Build Demo
 on:
-  workflow_dispatch:
+  workflow_dispatch:  # 手動実行をtriggerにする
   push:
 
 env:
@@ -8,7 +8,6 @@ env:
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
-  # This step builds our image, pushes it, and outputs the repo hash digest.
   build:
     permissions:
       contents: read
@@ -18,7 +17,7 @@ jobs:
       digest: ${{ steps.build.outputs.digest }}
     runs-on: arc-runner-set-arc-container-build-demo
     steps:
-      # - name: Checkout the repository
+      # - name: Checkout the repository  # docker/build-push-actionでGit Contextを使う場合は不要
       #   uses: actions/checkout@v4
 
       - name: Set up Docker Buildx
@@ -40,7 +39,7 @@ jobs:
       - name: Build and push Container image
         id: build
         uses: docker/build-push-action@v6
-        with:
+        with:  # contextを指定しないことでGit Contextが使われる
           # context: .
           file: Dockerfile
           push: true
@@ -55,8 +54,20 @@ jobs:
           image_name="${IMAGE_REGISTRY}/${IMAGE_NAME}"
           echo "image=$image_name" >> "$GITHUB_OUTPUT"
 
-  # This step calls the container workflow to generate provenance and push it to
-  # the container registry.
+    # [デバッグ] GitHub Contextの中身を確認する
+    check-github-context:
+      runs-on: arc-runner-set-arc-container-build-demo
+      env:
+        GITHUB_CONTEXT: ${{ toJson(github) }}
+      steps:
+        - id: check
+          run: |
+            echo "==========================================" 
+            echo $GITHUB_OUTPUT
+            echo "=========================================="
+            
+
+  # This step calls the container workflow to generate provenance and push it to the container registry.
   provenance:
     needs: [build]
     permissions:
