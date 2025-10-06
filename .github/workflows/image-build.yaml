@@ -63,7 +63,7 @@ jobs:
       - id: check
         run: |
           echo "↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓" 
-          echo ${{env.GITHUB_CONTEXT}}
+          echo "$GITHUB_CONTEXT"
           echo "↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑"
             
 
